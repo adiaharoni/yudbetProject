@@ -12,22 +12,24 @@ except ImportError:
 def xxx(p1):
     global w
     print('entryPage_support.xxx')
-    src= w.entry_username
-    username1= src.get()
-    to= w.entry_password
+    src = w.entry_username
+    username1 = src.get()
+    to = w.entry_password
     password1= to.get()
-    print (username1+" "+password1)
+    print(username1+" "+password1)
     conn = sqlite3.connect('user3.db')
     cursor = conn.execute(
     "SELECT * from users where username= '"+username1+ "' and password= '"+password1+"'")
     rows = cursor.fetchall()  
     if len(rows) == 0:
-        print ("not in db!")
-        conn.execute("INSERT INTO USERS (username,password) \
+        print("not in db!")
+        cursor = conn.execute("INSERT INTO USERS (username,password) \
                                   VALUES ('" + username1 + "', '" + password1 + "' )")
+        conn.commit()
+        conn.close()
     else:
        print ("is in db!")
-    sys.stdout.flush()    
+    sys.stdout.flush()
     
 def init(top, gui, *args, **kwargs):
     global w, top_level, root
